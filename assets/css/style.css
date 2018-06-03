@@ -21,36 +21,41 @@ h2 {
     font-size: 25px;
 }
 
-.btn{
+.btn {
 	width: 150px;
 }
 
-.picStyle{
+.picStyle {
 	width: 100px;
 }
 
+.startBtn {
+	color: whitesmoke;
+}
+
 .startStyle, .userStyle, .opponentStyle, .currentOpponent{
+	color: whitesmoke;
 	width: 150px;
 	margin: 5px;
 	padding: 20px;
 }
 
-.startStyle{
+.startStyle {
 	background-color: rgba(102, 102, 153, 0.4);
 	border: solid 2px black;
 }
 
-.userStyle{
+.userStyle {
 	border: solid 2px darkgreen;
 	background-color: rgba(25, 76, 25, 0.8);
 }
 
-.opponentStyle{
+.opponentStyle {
 	background-color: rgba(164, 34, 45, 0.4);
 	border: solid 2px darkred;
 }
 
-.currentOpponent{
+.currentOpponent {
 	background-color: rgba(5, 9, 5, 0.8);
 	border: solid 2px darkblue;
 };
