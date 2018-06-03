@@ -72,7 +72,7 @@ function newGame(){
     }
 
  $(document).on('click', '.startStyle', function(){
-    userHP = $(this).data('hp');
+    userHitpoints = $(this).data('hp');
     // moves buttons to 'Your Character'
     $(this).removeClass('charImg startStyle').addClass('userStyle');
     $('.userChar').append($(this));
@@ -86,7 +86,118 @@ function newGame(){
         }
     chooseOpponent();
 });
-
 };
+
+function chooseOpponent(){
+    $('.messages').html(" ");
+    // clicking opponent starts the battleMode fucntion
+    $(document).on('click', '.opponentStyle', function(){
+        opponentHitpoints = $(this).data('hp');
+        console.log(opponentHitpoints);
+        $(this).removeClass('opponentStyle opponentChar').addClass('currentOpponent');
+        $(this).children('span').attr('class', 'enemigoHP');
+        $('.chosenOpponent').append($(this));
+        // turns off click for other opponent so that only chosenOpponent appears
+       for(var i = 0; i < charName.length; i++){
+            if(charName[i] != $(this).data('name')){
+                $(document).off('click', '.opponentStyle');
+            }
+        }
+        battleMode();
+    });
+}
+
+function generateOpponentAttack(){
+    var randomAttack = opponentAttackArray[Math.floor(Math.random() * 2)];
+        if(randomAttack === 'hit'){
+            opponentAttack = $('.currentOpponent').data('hit');
+        }
+        if(randomAttack === 'spAttack'){
+            opponentAttack = $('.currentOpponent').data('special');
+        }
+        if(randomAttack === 'block'){
+            opponentAttack = 'block';
+        }
+    console.log(randomAttack);
+    console.log(opponentAttack);
+}
+
+function displayHP(){
+    $('.currentOpponent').data('hp', opponentHitpoints);
+    $('.currentOpponent span').html(opponentHitpoints);
+    $('.userStyle').data('hp', userHitpoints);
+    $('.characterHP').html(userHitpoints);
+}
+
+function battleMode(){
+    $('.hit').on('click', function(){
+        generateOpponentAttack();
+        userAttack = $('.userStyle').data('hit');
+        if(opponentAttack === 'block'){
+            userHP = parseInt(userHitpoints - userAttack);
+            displayHP();
+        }
+        else{
+            opponentHitpoints = parseInt(opponentHitpoints - userAttack);
+            userHitpoints = parseInt(userHitpoints - opponentAttack);
+            displayHP();
+        }
+        console.log(userHitpoints + " " + opponentHitpoints);
+        winOrlose();
+    });
+
+    $('.spAttack').on('click', function(){
+        generateOpponentAttack();
+        userAttack = $('.userStyle').data('special');
+        if(opponentAttack === 'block'){
+            userHitpoints = parseInt(userHitpoints - userAttack);
+            displayHP();
+        }
+        else{
+            opponentHitpoints = parseInt(opponentHitpoints - userAttack);
+            userHitpoints = parseInt(userHitpoints - opponentAttack);
+            displayHP();
+        }
+        console.log(userHitpoints + " " + opponentHitpoints);
+        winOrlose();
+    });
+
+    $('.block').on('click', function(){
+        generateOpponentAttack();
+        // if both characters block, nothing happens
+        if(opponentAttack === 'block'){
+            userHitpoints = userHitpoints;
+            opponentHitpoints = opponentHitpoints;
+            displayHP();
+        }
+        else{
+            opponentHitpoints = parseInt(opponentHitpoints - opponentAttack);
+            displayHP();
+        }
+        console.log(userHitpoints + " " + opponentHitpoints);
+        winOrlose();
+    });
+}
+
+function winOrlose(){
+    if(opponentHitpoints <= 0 && (opponents != 0)){
+        music.play();
+        $('.messages').html("You have defeated your opponent! Click another caracter to continue the battle!");
+        var enemy = $('.currentOpponent').data('name');
+        $('#' + enemy).remove();
+        chooseOpponent();
+        opponents --;
+        console.log(opponents);
+    }
+    if((opponentHitpoints <= 0) && (opponents == 0)){
+        $('.messages').html("Congratulations!!! You have defeated all of your opponents and Won the game!  Press 'Restart' to start a new game.");
+    }
+    if(userHitpoints <= 0){
+        $('.messgaes').html("You have been defeated....Game Over!!! Press 'Restart' to start a new game.");
+    }
+
+}
+
+
 
 
