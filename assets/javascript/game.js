@@ -1,0 +1,11 @@
+var music = document.createElement('audio');
+music.setAttribute('src','../sounds/the-game.mp3');
+music.volume = .3;
+var selectBeeaudio = document.createElement('audio');
+selectBeeaudio.setAttribute('src', '../sounds/bumble-bee-intro.mp3');
+var selectOptimusaudio = document.createElement('audio');
+selectOptimusaudio.setAttribute('src', '../sounds/optimus-intro.mp3');
+var selectLaseraudio = document.createElement('audio');
+selectLaseraudio.setAttribute('src', '../sounds/laserbeak-intro.mp3');
+var selectStealthaudio = document.createElement('audio');
+selectStealthaudio.setAttribute('src', '../sounds/stealthbreaker-intro.mp3');

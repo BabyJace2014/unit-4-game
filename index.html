@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+        <title>Transformers RPG</title>        
+    </head>
+    <body>
+
+        <div class="header-buttons">
+            <button class="btn btn-default startButton">Start New Game</button>
+            <button class="btn btn-default restartButton">Restart Game</button>
+            <button class="btn btn-default playButton">Play Battle Music</button>
+            <button class="btn btn-default pauseMusic">Pause Battle Music</button>
+        </div>
+
+        <div class="container">
+            <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Instructions To Play:</strong>
+                <p>1. Select a character to bring to battle.</p>
+                <p>2. Pick your first opponent to battle.</p>
+                <p>3. Click on 'Punch', 'Kick', or 'Block' to attack your opponent.</p>
+                <p>	  * This decreases your opponents HP and will also decrease yours depending on their attack. </p>
+		        <p>	  * When your opponent blocks, it will lower your HP depending on your attack.</p>
+		        <p>	  * When both characters block, nothing will happen.</p>
+		        <p>4. When you've defeated your opponent, you will select another opponent to battle.</p>
+		        <p>The goal of the game is to defeat all your opponents! Click <strong>'Start New Game'</strong> to begin.</p>
+		        <p>GOOD LUCK!!!</p>
+            </div>
+
+            <h3>Choose Your Character</h3>
+			    <div class = 'startBtn'></div>
+			
+		    <h3>Your Character</h3>
+			    <div class = "userChar"></div>
+	
+		    <h3>Characters to Battle</h3>
+			    <div class = "opponentChar"></div>
+		
+		    <h2>Battle Ground</h2>
+			    <div class ='messages'></div>
+			        <button class="btn btn-success hit">Back Kick</button>
+			        <button class="btn btn-warning spAttack">Hammer Fist</button>
+			        <button class="btn btn-danger block">Block</button>
+
+		    <h3>Opponent</h3>
+			<div class = "chosenOpponent"></span></div>
+       
+       
+        </div>
+
+        
+        
+        <script type="text/javascript" src="assets/javascript/game.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    </body>
+</html>

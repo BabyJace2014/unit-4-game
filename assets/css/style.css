@@ -1,0 +1,56 @@
+body {
+    background: url("../images/battleground.jpg") 
+}
+
+h2 {
+    font-weight: bolder;
+}
+
+.header-buttons{
+	width: 100%;
+	background: rgba(240, 151, 224, 0.4);
+	padding:20px;
+	margin: 10px 0px;
+}
+
+.container {
+    color: white;
+}
+
+.messages {
+    font-size: 25px;
+}
+
+.btn{
+	width: 150px;
+}
+
+.picStyle{
+	width: 100px;
+}
+
+.startStyle, .userStyle, .opponentStyle, .currentOpponent{
+	width: 150px;
+	margin: 5px;
+	padding: 20px;
+}
+
+.startStyle{
+	background-color: rgba(102, 102, 153, 0.4);
+	border: solid 2px black;
+}
+
+.userStyle{
+	border: solid 2px darkgreen;
+	background-color: rgba(25, 76, 25, 0.8);
+}
+
+.opponentStyle{
+	background-color: rgba(164, 34, 45, 0.4);
+	border: solid 2px darkred;
+}
+
+.currentOpponent{
+	background-color: rgba(5, 9, 5, 0.8);
+	border: solid 2px darkblue;
+};
