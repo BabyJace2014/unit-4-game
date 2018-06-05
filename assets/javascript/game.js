@@ -73,8 +73,8 @@ function newGame(){
 
  $(document).on('click', '.startStyle', function(){
     userHitpoints = $(this).data('hp');
-    // moves buttons to 'Your Character'
-    $(this).removeClass('charImg startStyle').addClass('userStyle');
+    // moves button to 'Your Character'
+    $(this).removeClass('charImage startStyle').addClass('userStyle');
     $('.userChar').append($(this));
     // moves other character to 'Characters to Battle'
     for(var i = 0; i < charName.length; i++){
@@ -134,7 +134,7 @@ function battleMode(){
         generateOpponentAttack();
         userAttack = $('.userStyle').data('hit');
         if(opponentAttack === 'block'){
-            userHP = parseInt(userHitpoints - userAttack);
+           userHitpoints = parseInt(userHitpoints - userAttack);
             displayHP();
         }
         else{
