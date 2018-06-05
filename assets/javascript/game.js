@@ -86,7 +86,7 @@ function newGame(){
         }
     chooseOpponent();
 });
-};
+}
 
 function chooseOpponent(){
     $('.messages').html(" ");
