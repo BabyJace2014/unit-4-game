@@ -1,14 +1,7 @@
 var music = document.createElement('audio');
 music.setAttribute('src','assets/sounds/the-game.mp3');
 music.volume = .3;
-var selectBeeaudio = document.createElement('audio');
-selectBeeaudio.setAttribute('src', 'assets/sounds/bumble-bee-intro.mp3');
-var selectOptimusaudio = document.createElement('audio');
-selectOptimusaudio.setAttribute('src', 'assets/sounds/optimus-intro.mp3');
-var selectLaseraudio = document.createElement('audio');
-selectLaseraudio.setAttribute('src', 'assets/sounds/laserbeak-intro.mp3');
-var selectStealthaudio = document.createElement('audio');
-selectStealthaudio.setAttribute('src', 'assets/sounds/stealthbreaker-intro.mp3');
+
 
 var playButton = document.getElementById("playButton");
 
@@ -118,15 +111,8 @@ function generateOpponentAttack(){
         if(randomAttack === 'block'){
             opponentAttack = 'block';
         }
-    console.log(randomAttack);
-    console.log(opponentAttack);
-}
-
-function displayHP(){
-    $('.currentOpponent').data('hp', opponentHitpoints);
-    $('.currentOpponent span').html(opponentHitpoints);
-    $('.userStyle').data('hp', userHitpoints);
-    $('.characterHP').html(userHitpoints);
+   // console.log(randomAttack);
+   // console.log(opponentAttack);
 }
 
 function battleMode(){
@@ -142,7 +128,7 @@ function battleMode(){
             userHitpoints = parseInt(userHitpoints - opponentAttack);
             displayHP();
         }
-        console.log(userHitpoints + " " + opponentHitpoints);
+      //  console.log(userHitpoints + " " + opponentHitpoints);
         winOrlose();
     });
 
@@ -158,7 +144,7 @@ function battleMode(){
             userHitpoints = parseInt(userHitpoints - opponentAttack);
             displayHP();
         }
-        console.log(userHitpoints + " " + opponentHitpoints);
+       // console.log(userHitpoints + " " + opponentHitpoints);
         winOrlose();
     });
 
@@ -174,7 +160,7 @@ function battleMode(){
             opponentHitpoints = parseInt(opponentHitpoints - opponentAttack);
             displayHP();
         }
-        console.log(userHitpoints + " " + opponentHitpoints);
+     //   console.log(userHitpoints + " " + opponentHitpoints);
         winOrlose();
     });
 }
@@ -185,7 +171,7 @@ function winOrlose(){
         $('.messages').html("You have defeated your opponent! Click another caracter to continue the battle!");
         var enemy = $('.currentOpponent').data('name');
         $('#' + enemy).remove();
-        chooseOpponent();
+         chooseOpponent();
         opponents --;
         console.log(opponents);
     }
@@ -195,9 +181,15 @@ function winOrlose(){
     if(userHitpoints <= 0){
         $('.messgaes').html("You have been defeated....Game Over!!! Press 'Restart' to start a new game.");
     }
-
+    
 }
 
+function displayHP(){
+    $('.currentOpponent').data('hp', opponentHitpoints);
+    $('.currentOpponent span').html(opponentHitpoints);
+    $('.userStyle').data('hp', userHitpoints);
+    $('.userChar span').html(userHitpoints);
+}
 
 
 
