@@ -3,7 +3,6 @@ music.setAttribute('src','assets/sounds/the-game.mp3');
 music.volume = .3;
 
 
-var playButton = document.getElementById("playButton");
 
 var charName = ['Optimus', 'Bumble-Bee', 'Laser-Beak', 'Stealth-Breaker'];
 var charHitpoints = [2000, 1850, 1650, 1500];
@@ -19,6 +18,7 @@ var opponentAttackArray = ['hit', 'spAttack', 'block'];
 $('.startButton').on('click', function(){
     $(this).hide();
     $('.alert').remove();
+    opponents = 3;
     newGame();
 
 });
@@ -27,10 +27,11 @@ $('.restartButton').on('click', function(){
     $('.messages').html(" ");
 	if(startPressed = true){
 	//removes remaining characters off the board.
-	for(var i = 0; i< charName.length; i++){
+	for(var i = 0; i < charName.length; i++){
 		$('#' + charName[i]).remove();
 	}
-	opponents = 3;
+    $('h3').show();
+    opponents = 3;
 	newGame();
 	}
 });
@@ -62,6 +63,7 @@ function newGame(){
         var hpSpan = $('<span>').addClass('characterHP').html(character.data('hp'));
         character.append(charName[i], characterPic, hpSpan);
         $('.startBtn').append(character);
+    $('.messages').html("CHOOSE YOUR CHARACTER");
     }
 
  $(document).on('click', '.startStyle', function(){
@@ -82,7 +84,7 @@ function newGame(){
 }
 
 function chooseOpponent(){
-    $('.messages').html(" ");
+    $('.messages').html("Select Your Opponent");
     // clicking opponent starts the battleMode fucntion
     $(document).on('click', '.opponentStyle', function(){
         opponentHitpoints = $(this).data('hp');
@@ -96,19 +98,20 @@ function chooseOpponent(){
                 $(document).off('click', '.opponentStyle');
             }
         }
+        $('.messages').html(" ");
         battleMode();
     });
 }
 
 function generateOpponentAttack(){
     var randomAttack = opponentAttackArray[Math.floor(Math.random() * 2)];
-        if(randomAttack === 'hit'){
+        if(randomAttack == 'hit'){
             opponentAttack = $('.currentOpponent').data('hit');
         }
-        if(randomAttack === 'spAttack'){
+        if(randomAttack == 'spAttack'){
             opponentAttack = $('.currentOpponent').data('special');
         }
-        if(randomAttack === 'block'){
+        if(randomAttack == 'block'){
             opponentAttack = 'block';
         }
    // console.log(randomAttack);
@@ -119,7 +122,7 @@ function battleMode(){
     $('.hit').on('click', function(){
         generateOpponentAttack();
         userAttack = $('.userStyle').data('hit');
-        if(opponentAttack === 'block'){
+        if(opponentAttack == 'block'){
            userHitpoints = parseInt(userHitpoints - userAttack);
             displayHP();
         }
@@ -135,7 +138,7 @@ function battleMode(){
     $('.spAttack').on('click', function(){
         generateOpponentAttack();
         userAttack = $('.userStyle').data('special');
-        if(opponentAttack === 'block'){
+        if(opponentAttack == 'block'){
             userHitpoints = parseInt(userHitpoints - userAttack);
             displayHP();
         }
@@ -151,7 +154,7 @@ function battleMode(){
     $('.block').on('click', function(){
         generateOpponentAttack();
         // if both characters block, nothing happens
-        if(opponentAttack === 'block'){
+        if(opponentAttack == 'block'){
             userHitpoints = userHitpoints;
             opponentHitpoints = opponentHitpoints;
             displayHP();
@@ -165,31 +168,31 @@ function battleMode(){
     });
 }
 
-function winOrlose(){
-    if(opponentHitpoints <= 0 && (opponents != 0)){
-        music.play();
-        $('.messages').html("You have defeated your opponent! Click another caracter to continue the battle!");
-        var enemy = $('.currentOpponent').data('name');
-        $('#' + enemy).remove();
-         chooseOpponent();
-        opponents --;
-        console.log(opponents);
-    }
-    if((opponentHitpoints <= 0) && (opponents == 0)){
-        $('.messages').html("Congratulations!!! You have defeated all of your opponents and Won the game!  Press 'Restart' to start a new game.");
-    }
-    if(userHitpoints <= 0){
-        $('.messgaes').html("You have been defeated....Game Over!!! Press 'Restart' to start a new game.");
-    }
-    
-}
-
 function displayHP(){
     $('.currentOpponent').data('hp', opponentHitpoints);
     $('.currentOpponent span').html(opponentHitpoints);
     $('.userStyle').data('hp', userHitpoints);
     $('.userChar span').html(userHitpoints);
 }
+
+function winOrlose(){
+    if(userHitpoints <= 0){
+        $('.messgaes').html("You have been defeated....Game Over!!! Press 'Restart' to start a new game.");
+    }
+    if((opponentHitpoints <= 0) && (opponents != 0)){
+        music.play();
+        var enemy = $('.currentOpponent').data('name');
+        $('#' + enemy).remove();
+         chooseOpponent();
+        opponents --;
+    }
+    if((opponentHitpoints <= 0) && (opponents == 0)){
+        $('.messages').html("Congratulations!!! You have defeated all of your opponents and Won the game!  Press 'Restart' to start a new game.");
+    }
+    
+    
+}
+
 
 
 

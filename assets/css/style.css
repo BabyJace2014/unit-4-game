@@ -6,6 +6,7 @@ h2 {
     font-weight: bolder;
 }
 
+
 .header-buttons{
 	width: 100%;
 	background: rgba(240, 151, 224, 0.4);
@@ -14,11 +15,13 @@ h2 {
 }
 
 .container {
-    color: white;
+	color: white;
 }
 
+
 .messages {
-    font-size: 25px;
+	font-size: 50px;
+	color: floralwhite;
 }
 
 .btn {
