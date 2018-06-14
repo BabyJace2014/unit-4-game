@@ -1,75 +1,80 @@
-var charName = ['Optimus','Bumble-Bee', 'Laser-Beak', 'Stealth-Breaker'];
+
+var charName = ['Optimus', 'Bumble-Bee', 'Laser-Beak', 'Stealth-Breaker'];
 var charHP = [600, 400, 480, 320];
-var charImg = ['optimus.jpg','bumblebee.jpg', 'laserbeak.jpg', 'stealthbreaker.jpg'];
-var charAtk = [8, 20, 16, 28];
+var charHit = [8, 20, 16, 28];
+var charImg = ['optimus.jpg', 'bumblebee.jpg', 'laserbeak.jpg', 'stealthbreaker.jpg'];
 var charSpecial = [12, 20, 16, 32];
 
-var userHP; 
-var userAtk; 
-var opponentHP; 
-var opponentAtk;
+var userHitpoints; 
+var userAttack; 
+var opponentHitpoints; 
+var opponentAttack;
 var userChar;
 var opponentChar;
-var opponentsLeft = 3;
+var battleMode = false;
+
+
+newGame();
 
 function newGame(){
-    // creating caracter buttons
+    //Creating buttons
     for(var i = 0; i < charName.length; i++){
         var character = $('<button>');
-        var characterPic = $('<img>');
+        var characterPic = $('<img>'); 
         characterPic.attr('src', 'assets/images/' + charImg[i]);
         characterPic.addClass('picStyle');
         character.addClass('startStyle');
         character.attr('id', charName[i]);
         character.attr({'data-hp': charHP[i]});
-        character.attr({'data-atk': charAtk[i]});
+        character.attr({'data-hit': charHit[i]});
         character.attr({'data-name': charName[i]});
         character.attr({'data-special': charSpecial[i]});
         var hpSpan = $('<span>').addClass('characterHP').html(character.data('hp'));
         character.append(charName[i], characterPic, hpSpan);
         $('.startBtn').append(character);
-        $('.messages').html("CHOOSE YOUR CHARACTER");
     }
-
-    // choose user character
-    $(document).on('click', '.startStyle', function() {
+    
+    $(document).on('click', '.startStyle',function(){
         userHP = $(this).data('hp');
-        // moves button to "Your Character"
+        console.log(userHP);
+        //Moves Button to 'Your Character'
         $(this).removeClass('charImg startStyle').addClass('userStyle');
         $('.userChar').append($(this));
-        // moves other to "Characters to Battle"
+        //Moves other to 'Characters to Battle'
         for(var i = 0; i < charName.length; i++){
             if(charName[i] != $(this).data('name')){
-                $('#' + charName[i]).removeClass('charImg startStyle').addClass('opponentStyle');
-                $('#' + charName[i] + ' span').removeClass('characterHP');
-                $('.opponentChar').append($('#' + charName[i]));
+                $('#'+charName[i]).removeClass('charImg startStyle').addClass('opponentStyle');
+                $('#'+charName[i]+ ' span').removeClass('characterHP');
+                $('.opponentChar').append($('#'+charName[i]));
             }
         }
         chooseOpponent();
-    });    
-
-}
-
-function chooseOpponent() {
-    $('.messages').html("CHOOSE OPPONENT TO BATTLE");
-    $(document).on('click', '.opponentStyle', function(){
-        opponentHP = $(this).data('hp');
-        $(this).removeClass('opponentStyle opponentChar').addClass('currentOpponent');
-        // turns off click function for other opponents
-        for(var i = 0; i < charName.length; i++){
-            if(charName[i] != $(this).data('name')){
-                $(document).off('click', '.opponentStyle');
-            }
-        }
-    battleMode();
     });
-}
-
+    }
+    
+    function chooseOpponent(){
+        $('.messages').html(' ');
+    //clicking opponents sends them to battleMode function. 
+        $(document).on('click', '.opponentStyle', function(){
+            opponentHP = $(this).data('hp');
+            console.log(opponentHP);
+            $(this).removeClass('opponentSyle opponentChar').addClass('currentOpponent');
+            $(this).children('span').attr('class','enemigoHP');
+            $('.chosenOpponent').append($(this));
+            //Turns off click for other opponent so that only chosenOpponent appears
+            for(var i = 0; i < charName.length; i++){
+                if(charName[i] != $(this).data('name')){
+                    $(document).off('click','.opponentStyle');
+                }
+            }
+            battleMode();
+        });
+    }
+     
 function updateDisplay() {
-        $('.currentOpponent').data('hp', opponentHP);
-        $('.currentOpponent span').html(opponentHP);
-        $('.userStyle').data('hp', userHP);
-        $('.characterHP span').html(userHP);
+        $('.userChar .character-attack').text("Attack: " + userAttack);
+        $('.userChar .character-hp').text("HP: " + userHitpoints);
+        $('.choosenOpponent .character-hp').text("HP: " + opponentHitpoints);
         $('.messages').html('<p>You took ' + opponentAttack + ' damage.</p><p>' + character[opponentChar].name + ' took ' + (userAttack-character[userChar].attack) + ' damage.</p>');
     }
 
