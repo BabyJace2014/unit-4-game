@@ -100,7 +100,7 @@ function updateDisplay() {
         $('.currentOpponent').data('hp', opponentHP);
         $('.currentOpponent span').html(opponentHP);
         $('.userStyle').data('hp', userHP);
-        $('.characterHP span').html(userHP);
+        $('.userStyle span').html(userHP);
     }
 
  function battleMode() {
@@ -109,6 +109,8 @@ function updateDisplay() {
            opponentHP = parseInt(opponentHP - userAtk);
            opponentAtk = $('.opponentStyle').data('atk');
            userHP = parseInt(userHP - opponentAtk);
+           console.log(userHP);
+           console.log(opponentAtk);
             updateDisplay();
             winLoss();
     });
