@@ -12,6 +12,18 @@ var userChar;
 var opponentChar;
 var opponentsLeft = 3;
 
+
+// headerButtons
+$('.startButton').on('click', function(){
+    newGame();
+    $(this).hide('click');
+    
+});
+
+$('.restartButton').on('click', function(){
+    newGame();
+});
+
 function newGame(){
     // creating caracter buttons
     for(var i = 0; i < charName.length; i++){
@@ -55,13 +67,16 @@ function chooseOpponent() {
     $(document).on('click', '.opponentStyle', function(){
         opponentHP = $(this).data('hp');
         $(this).removeClass('opponentStyle opponentChar').addClass('currentOpponent');
+        $(this).children('span').attr('class', 'enemigoHP');
+        $('.chosenOpponent').append($(this));
+        $('.messages').html('');
         // turns off click function for other opponents
         for(var i = 0; i < charName.length; i++){
             if(charName[i] != $(this).data('name')){
                 $(document).off('click', '.opponentStyle');
             }
         }
-    battleMode();
+   battleMode();
     });
 }
 
@@ -70,90 +85,35 @@ function updateDisplay() {
         $('.currentOpponent span').html(opponentHP);
         $('.userStyle').data('hp', userHP);
         $('.characterHP span').html(userHP);
-        $('.messages').html('<p>You took ' + opponentAttack + ' damage.</p><p>' + character[opponentChar].name + ' took ' + (userAttack-character[userChar].attack) + ' damage.</p>');
     }
 
+ function battleMode() {
+    $('#attack-button').on('click', function() {
+           userAtk = $('.userStyle').data('atk');
+           opponentHP = parseInt(opponentHP - userAtk);
+           opponentAtk = $('.opponentStyle').data('atk');
+           userHP = parseInt(userHP - opponentAtk);
+            updateDisplay();
+            winLoss();
+    });
+
+}
+
 function winLoss() {
-    if (userHitpoints <= 0) {
-        $('#attack-button').prop('disabled', true);
-        $('.messages').append('<p>You were defeated!!! Press "Restart" to play again.</p>');
-        $('.restartButton').hide();
+    if ((opponentHP <= 0) && (opponentsLeft == 0)) {
+        $('.messages').html("Congratulations!!! You have defeated all of your opponents. Press 'Restart' to play again.");
     }
-    else if (opponentHitpoints <= 0){
-        $('.current-enemy').remove();
-        battleMode = false;
+    else if (opponentHP <= 0) {
+        var enemy = $('.currentOpponent').data('name');
+        $('#' + enemy).remove();
         opponentsLeft--;
-        if (opponentsLeft == 0) {
-            $('.messages').append('<p>You defeated all of your enemies!!! You Win!!! Press "Restart" to play again.</p>');
+        chooseOpponent();
+        console.log(opponentsLeft);
+    }
+    
+        if (userHP == 0) {
+            $('.messages').html("You lost. Game Over!. Press 'Restart to play again.");
             $('.resartButton').show();
         }
     
     }
-}
-
-$(document).ready(function() {
-    newGame();
-
-    $('.startBtn').on('click', '.character-button', function() {
-        userChar = parseInt($(this).attr('data-index'));
-        userHitpoints = character[userChar].hp;
-        userAttack = character[userChar].attack;
-
-        var userDiv = $('div[data-index=' + userChar + ']');
-        userDiv.attr('class', 'character-info user-character');
-        $(userDiv).detach().prependTo('.userChar');
-
-        for (var i = 0; i < character.length; i++) {
-            if (i !== userChar) {
-                var currentDiv = $('div[data-index=' + i + ']');
-                currentDiv.attr('class', 'character-info enemy-character');
-                $(currentDiv).detach().appendTo('.opponentChar');
-                $('div[data-index=' + i +'] .character-stats .character-attack').text('Attack: ' + character[i].counter);
-            }
-        }
-
-        $('.startBtn').attr('class', 'hidden');
-
-    });
-
-    $('.opponentChar').on('click', '.enemy-character', function() {
-        if (!battleMode) {
-            opponentChar = parseInt($(this).attr('data-index'));
-            opponentHitpoints = character[opponentChar].hp;
-            opponentAttack = character[opponentChar].counter;
-
-            var enemyDiv = $('div[data-index=' + opponentChar + ']');
-            enemyDiv.attr('class', 'character-info enemy-character current-enemy');
-            $(enemyDiv).detach().prependTo('.chosenOpponent');
-            battleMode = true;
-            $('.messages').empty();
-        }
-    });
-
-    $('#attack-button').on('click', function() {
-        if (battleMode) {
-            userHitpoints -= opponentAttack;
-            opponentHitpoints -= userAttack;
-            userAttack += character[userChar].attack;
-            updateDisplay();
-            winLoss();
-        }
-    });
-
-    $('.header-buttons').on('click', '.restartButton', function() {
-        userHitpoints = null;
-        userAttack = null;
-        opponentHitpoints = null;
-        opponentAttack = null;
-        userChar = null;
-        opponentChar = null;
-        opponentsLeft = character.length-1;
-        battleMode = false;
-        $('.player-character').remove();
-        $('.enemy-character').remove();
-        $('.messages').text('');
-
-        newGame();
-    });
-
-});
