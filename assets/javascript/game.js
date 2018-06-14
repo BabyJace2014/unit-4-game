@@ -1,3 +1,7 @@
+var music = document.createElement('audio');
+music.setAttribute('src', 'assets/sounds/the-game.mp3');
+music.volume=.3;
+
 var charName = ['Optimus','Bumble-Bee', 'Laser-Beak', 'Stealth-Breaker'];
 var charHP = [600, 400, 480, 320];
 var charImg = ['optimus.jpg','bumblebee.jpg', 'laserbeak.jpg', 'stealthbreaker.jpg'];
@@ -23,6 +27,18 @@ $('.startButton').on('click', function(){
 $('.restartButton').on('click', function(){
     newGame();
 });
+
+$('.playButton').on('click', function(){
+    music.play();
+    $(this).hide('click');
+});
+
+$('.pauseMusic').on('click', function(){
+    music.pause();
+    $('.playButton').show();
+});
+
+
 
 function newGame(){
     // creating caracter buttons
