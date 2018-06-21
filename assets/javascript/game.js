@@ -9,7 +9,8 @@ var charAtk = [8, 20, 16, 28];
 var charSpecial = [12, 20, 16, 32];
 
 var userHP; 
-var userAtk; 
+var userAtk;
+var userSpecial; 
 var opponentHP; 
 var opponentAtk;
 var userChar;
@@ -21,23 +22,18 @@ var opponentsLeft = 3;
 $('.startButton').on('click', function(){
     newGame();
     $(this).hide('click');
-    
+    $('.restartButton').show();
 });
 
 $('.restartButton').on('click', function(){
+    document.location.reload();
     newGame();
 });
 
-$('.playButton').on('click', function(){
-    music.play();
-    $(this).hide('click');
+$(document).ready(function(){
+    $('.restartButton').hide();
+    $('#attack-button').hide();
 });
-
-$('.pauseMusic').on('click', function(){
-    music.pause();
-    $('.playButton').show();
-});
-
 
 
 function newGame(){
@@ -92,6 +88,9 @@ function chooseOpponent() {
                 $(document).off('click', '.opponentStyle');
             }
         }
+        userAtk = $('.userStyle').data('atk');
+        opponentAtk = $('.opponentStyle').data('atk');
+        $('#attack-button').show();
    battleMode();
     });
 }
@@ -101,19 +100,24 @@ function updateDisplay() {
         $('.currentOpponent span').html(opponentHP);
         $('.userStyle').data('hp', userHP);
         $('.userStyle span').html(userHP);
-    }
+        $('.messages').html("You attacked for " + userAtk + " and took " + opponentAtk + " damage.");
+        setTimeout(function(){
+            $('.messages').html(" ");
+        }, 3000);
+        }   
+    
+
 
  function battleMode() {
     $('#attack-button').on('click', function() {
-           userAtk = $('.userStyle').data('atk');
-           opponentHP = parseInt(opponentHP - userAtk);
-           opponentAtk = $('.opponentStyle').data('atk');
-           userHP = parseInt(userHP - opponentAtk);
-           console.log(userHP);
-           console.log(opponentAtk);
+           $('.messages').html("");
+           userSpecial = $('.userStyle').data('special');
+           userAtk = userAtk + userSpecial;
+           opponentHP -= userAtk;
+           userHP -= opponentAtk;
             updateDisplay();
-            winLoss();
-    });
+            winLoss(); 
+        });
 
 }
 
@@ -125,13 +129,14 @@ function winLoss() {
         var enemy = $('.currentOpponent').data('name');
         $('#' + enemy).remove();
         opponentsLeft--;
+        music.play();
         chooseOpponent();
-        console.log(opponentsLeft);
+        
     }
     
         if (userHP == 0) {
-            $('.messages').html("You lost. Game Over!. Press 'Restart to play again.");
-            $('.resartButton').show();
+            $('.messages').html("You lost. Game Over!. Press 'Start New Game' to play again.");
+            $('.startButton').show();
         }
     
     }

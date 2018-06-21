@@ -15,8 +15,6 @@
         <div class="header-buttons">
             <button class="btn btn-default startButton">Start New Game</button>
             <button class="btn btn-default restartButton">Restart Game</button>
-            <button class="btn btn-default playButton">Play Battle Music</button>
-            <button class="btn btn-default pauseMusic">Pause Battle Music</button>
         </div>
         <div class="container">
             <div class="alert alert-dismissible alert-danger">
@@ -25,23 +23,22 @@
                 <p>1. Select a character to bring to battle.</p>
                 <p>2. Pick your first opponent to battle.</p>
                 <p>3. Click the 'Attack' button to attack your opponent.</p>
-                <p>	  * This decreases your opponents HP and will also decrease yours depending on their attack. </p>
-		        <p>	  * When your opponent blocks, it will lower your HP depending on your attack.</p>
-		        <p>	  * When both characters block, nothing will happen.</p>
+                <p>	  * This decreases your opponents HP and will also decrease yours from their attack.</p>
 		        <p>4. When you've defeated your opponent, you will select another opponent to battle.</p>
 		        <p>The goal of the game is to defeat all your opponents! Click <strong>'Start New Game'</strong> to begin.</p>
 		        <p>GOOD LUCK!!!</p>
             </div>
                 <div class = 'messages'></div>
             
-			    <div class = "startBtn"></div>
-	
+            <h3>Your Character</h3> 
+                <div class = "startBtn"></div>
+            
 		    <h3>Characters to Battle</h3>
 			    <div class = "opponentChar"></div>
 		
 		    <h2>Battle Ground</h2>
 			    <div class ='gameButtons'></div>
-			        <button id="attack-button" class="hidden">Attack</button>
+			        <button id="attack-button">Attack</button>
                    
 		    <h3>Opponent</h3>
 			<div class = "chosenOpponent"></span></div>
