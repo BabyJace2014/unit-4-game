@@ -128,6 +128,7 @@ function winLoss() {
     else if (opponentHP <= 0) {
         var enemy = $('.currentOpponent').data('name');
         $('#' + enemy).remove();
+        $('#attack-button').hide();
         opponentsLeft--;
         music.play();
         chooseOpponent();
