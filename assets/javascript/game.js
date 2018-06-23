@@ -78,6 +78,7 @@ function chooseOpponent() {
     $('.messages').html("CHOOSE OPPONENT TO BATTLE");
     $(document).on('click', '.opponentStyle', function(){
         opponentHP = $(this).data('hp');
+        opponentAtk = $(this).data('atk');
         $(this).removeClass('opponentStyle opponentChar').addClass('currentOpponent');
         $(this).children('span').attr('class', 'enemigoHP');
         $('.chosenOpponent').append($(this));
@@ -89,7 +90,8 @@ function chooseOpponent() {
             }
         }
         userAtk = $('.userStyle').data('atk');
-        opponentAtk = $('.opponentStyle').data('atk');
+        userSpecial = $('.userStyle').data('special');
+        userAtk = (userAtk + userSpecial);
         $('#attack-button').show();
    battleMode();
     });
@@ -99,8 +101,7 @@ function updateDisplay() {
         $('.currentOpponent').data('hp', opponentHP);
         $('.currentOpponent span').html(opponentHP);
         $('.userStyle').data('hp', userHP);
-        $('.userStyle span').html(userHP);
-        console.log(userHP);   
+        $('.userStyle span').html(userHP);  
     }   
     
 
@@ -108,10 +109,11 @@ function updateDisplay() {
  function battleMode() {
     $('#attack-button').on('click', function() {
            $('.messages').html("");
-           userSpecial = $('.userStyle').data('special');
-           userAtk = (userAtk + userSpecial);
-           opponentHP -= userAtk;
-           userHP -= opponentAtk;
+           opponentHP = (opponentHP - userAtk);
+           userHP = parseInt(userHP - opponentAtk);
+           console.log("User HP:"+userHP)
+           console.log("Opp HP: "+opponentHP)
+           console.log("Opp Attack: "+opponentAtk)
            winLoss();
            updateDisplay();
 
@@ -135,7 +137,7 @@ function winLoss() {
         music.play();
         chooseOpponent();
     }
-    else if (userHP <= 0) {
+    else if (userHP < 0) {
         $('#attack-button').hide();
         $('.messages').html("You have been defeated and lose!  Please press 'Restart' to play again.");
     }
