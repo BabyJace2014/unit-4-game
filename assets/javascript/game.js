@@ -100,11 +100,8 @@ function updateDisplay() {
         $('.currentOpponent span').html(opponentHP);
         $('.userStyle').data('hp', userHP);
         $('.userStyle span').html(userHP);
-        $('.messages').html("You attacked for " + userAtk + " and took " + opponentAtk + " damage.");
-        setTimeout(function(){
-            $('.messages').html(" ");
-        }, 3000);
-        }   
+        console.log(userHP);   
+    }   
     
 
 
@@ -112,17 +109,22 @@ function updateDisplay() {
     $('#attack-button').on('click', function() {
            $('.messages').html("");
            userSpecial = $('.userStyle').data('special');
-           userAtk = userAtk + userSpecial;
+           userAtk = (userAtk + userSpecial);
            opponentHP -= userAtk;
            userHP -= opponentAtk;
-            updateDisplay();
-            winLoss(); 
+           winLoss();
+           updateDisplay();
+
         });
 
 }
 
 function winLoss() {
-    if ((opponentHP <= 0) && (opponentsLeft == 0)) {
+    
+    if ( (opponentHP <= 0) && (opponentsLeft == 0) ) {
+        var enemy = $('.currentOpponent').data('name');
+        $('#' + enemy).remove();
+        $('#attack-button').hide();
         $('.messages').html("Congratulations!!! You have defeated all of your opponents. Press 'Restart' to play again.");
     }
     else if (opponentHP <= 0) {
@@ -132,12 +134,15 @@ function winLoss() {
         opponentsLeft--;
         music.play();
         chooseOpponent();
-        
     }
-    
-        if (userHP == 0) {
-            $('.messages').html("You lost. Game Over!. Press 'Start New Game' to play again.");
-            $('.startButton').show();
-        }
-    
+    else if (userHP <= 0) {
+        $('#attack-button').hide();
+        $('.messages').html("You have been defeated and lose!  Please press 'Restart' to play again.");
     }
+    else {
+        $('.messages').html("You attacked for " + userAtk + " and took " + opponentAtk + " damage.");
+        setTimeout(function(){
+            $('.messages').html(" ");
+        }, 1000);
+    }
+}
